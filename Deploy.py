@@ -2,6 +2,7 @@ from turtle import home
 import cv2
 import os
 import numpy as np
+from PIL import Image
 import HandTracking_GestureRecognition_Module as hgm
 
 colorsPath = "NavBar/Colors"
@@ -39,7 +40,7 @@ def main():
     width, height = 1280, 720
     brushColor = [(0, 0, 255), (0, 255, 0), (255, 0, 80)]
     brushSize = [10, 20, 30]
-    eraserSize = [20, 40, 60]
+    eraserSize = [25, 45, 60]
     currNavBar, currNavBarid, currColor, currBrushsize, currEraserSize = homepage[0], 0, brushColor[2], brushSize[1], eraserSize[1]
     canvas = np.zeros((height, width, 3), dtype = 'uint8')
 
@@ -84,7 +85,7 @@ def main():
                             currNavBar, currNavBarid = sizes[1], 2
 
                         elif xm > 780 and xm < 940:
-                            currNavBar, currColor = sizes[2], 3
+                            currNavBar, currNavBarid = sizes[0], 3
 
                 elif currNavBarid == 1:
                     if ym < 100:
@@ -114,13 +115,27 @@ def main():
                         elif xm > 1080 and xm < 1200:
                             currNavBar, currNavBarid = homepage[0], 0
                 
-                # elif currNavBarid == 3:
-                #     sd = 2
+                elif currNavBarid == 3:
+                    if ym < 100:
+                        if xm > 100 and xm < 280:
+                            currNavBar, currEraserSize = sizes[2], eraserSize[0]
+
+                        elif xm > 400 and xm < 620:
+                            currNavBar, currEraserSize = sizes[1], eraserSize[1]
+
+                        elif xm > 780 and xm < 940:
+                            currNavBar, currEraserSize = sizes[0], eraserSize[2]
+
+                        elif xm > 1080 and xm < 1200:
+                            currNavBar, currNavBarid = homepage[0], 0
 
             
             # index + middle + ring fingers
             elif fingers[0] == 1 and fingers[1] == 1 and fingers[2] == 1 and fingers[3] == 0:
                 xp, yp = 0, 0
+
+                # img = Image.fromarray(canvas)
+                # img.save("drawing.png")
 
             # index + middle + ring + pbrushColory fingers
             elif fingers[0] == 1 and fingers[1] == 1 and fingers[2] == 1 and fingers[3] == 1:
